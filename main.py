@@ -1,5 +1,5 @@
 import asyncio
-from handlers import (myinfo,random,start,review_dialog,add_dish,get_dish,add_cat)
+from handlers import (myinfo,random,start,review_dialog,add_dish,get_dish,add_cat,ban)
 from config import dp,bot,db
 
 
@@ -10,6 +10,7 @@ dp.include_router(review_dialog.review_router)
 dp.include_router(add_dish.admin_dish_router)
 dp.include_router(get_dish.get_dish_router)
 dp.include_router(add_dish.admin_dish_router)
+dp.include_router(ban.ban_router)
 
 async def main():
     db.create_tables()
