@@ -22,7 +22,15 @@ class Database:
                         CREATE TABLE IF NOT EXISTS dish(
                         id INTEGER PRIMARY KEY AUTOINCREMENT,
                         name TEXT,
-                        cost INTEGER
+                        cost INTEGER,
+                        cat_id INTEGER,
+                        FOREIGN KEY (cat_id) REFERENCES dish_cat(id)
+                        )
+                        """)
+           conn.execute("""
+                        CREATE TABLE IF NOT EXISTS dish_cat(
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        name TEXT
                         )
                         """)
 

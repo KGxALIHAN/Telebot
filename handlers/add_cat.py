@@ -13,31 +13,17 @@ admin_dish_router.message.filter(
 
 class Dish(StatesGroup):
     name = State()
-    cost = State()
-    cat_id = State()
-
+    dish_id = State()
 
 
 @admin_dish_router.message(Command("add_dish"), default_state)
 async def create_dish(message: types.Message, state: FSMContext):
     await state.set_state(Dish.name)
-    await message.answer("name of dish:")
+    await message.answer("name of cat:")
 
 @admin_dish_router.message(Dish.name)
 async def process_name(message: types.Message, state: FSMContext):
     await state.update_data(name=message.text)
-    await state.set_state(Dish.cost)
-    await message.answer("what is the price:")
-
-@admin_dish_router.message(Dish.cost)
-async def process_author(message: types.Message, state: FSMContext):
-    await state.update_data(cost=message.text)
-    await message.answer('write cat id')
-    await state.set_state(Dish.cat_id)
-
-@admin_dish_router.message(Dish.cat_id)
-async def process_cat_id(message: types.Message, state: FSMContext):
     data = await state.get_data()
-    db.execute("""INSERT INTO dish VALUES (?,?,?,?)""",(None,data['name'],data['cost'],message.text))
-    await message.answer("ok ok , dish is added")
+    db.execute("""INSERT INTO dish_cat VALUES(?,?)""",(None,data['name']))
     await state.clear()
